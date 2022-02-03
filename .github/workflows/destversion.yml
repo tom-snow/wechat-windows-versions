@@ -2,7 +2,7 @@ name: Wechat Dest Version
 
 on:
   schedule:
-    - 0 16 * * *
+    - cron: '0 16 * * *'
 
 jobs:
   save_new_wechat:
