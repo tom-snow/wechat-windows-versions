@@ -1,0 +1,15 @@
+name: Wechat Dest Version
+
+on:
+  schedule:
+    - 0 16 * * *
+
+jobs:
+  save_new_wechat:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # - name: Config git
+      #   run: git config --global user.email "name@gmail.com"&&git config --global user.name "name"
+      - name: Check new version and push
+        run: bash -x ./scripts/destVersionRelease.sh
