@@ -3,6 +3,12 @@ name: Wechat Dest Version
 on:
   schedule:
     - cron: '0 16 * * *'
+  workflow_dispatch:
+    inputs:
+      download_link:
+        description: 'The manual WechatSetup.exe download link'
+        required: false
+        default: 'https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe'
 
 jobs:
   save_new_wechat:
@@ -12,4 +18,6 @@ jobs:
       # - name: Config git
       #   run: git config --global user.email "name@gmail.com"&&git config --global user.name "name"
       - name: Check new version and push
-        run: bash -x ./scripts/destVersionRelease.sh
+        run: bash -x ./scripts/destVersionRelease.sh ${{ github.event.inputs.download_link }}
+      - name: Test Github Action Server Time
+        run: bash -x echo `date`
