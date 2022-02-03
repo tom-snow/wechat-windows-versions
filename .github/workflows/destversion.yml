@@ -15,9 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # - name: Config git
-      #   run: git config --global user.email "name@gmail.com"&&git config --global user.name "name"
-      - name: Check new version and push
-        run: bash -x ./scripts/destVersionRelease.sh ${{ github.event.inputs.download_link }}
       - name: Test Github Action Server Time
         run: bash -x echo `date`
+      - name: Check new version and push
+        env: 
+          GHTOKEN: ${{ secrets.GHTOKEN }}
+        run: bash -x ./scripts/destVersionRelease.sh ${{ github.event.inputs.download_link }}

@@ -11,13 +11,23 @@ if [ -z "$1" ]; then
     download_link="https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe"
 fi
 
-function install_depends () {
+function install_depends() {
     printf "#%.0s" {1..60}
     echo 
     echo -e "## \033[1;33mInstalling 7zip, shasum, wget, curl, git\033[0m"
     printf "#%.0s" {1..60}
     echo 
     apt install -y p7zip-full p7zip-rar libdigest-sha-perl wget curl git
+}
+
+function login_gh() {
+    echo $GHTOKEN > WeChatSetup/temp/GHTOKEN
+    gh auth login --with-token < WeChatSetup/temp/GHTOKEN
+    if [ "$?" -ne 0 ]; then
+        >&2 echo -e "\033[1;31mLogin Failed, please check your network or token!\033[0m"
+        clean_data 1
+    fi
+    rm -rfv WeChatSetup/temp/GHTOKEN
 }
 
 function download_wechat() {
@@ -74,8 +84,9 @@ function clean_data() {
 }
 
 function main() {
-    rm -rfv WeChatSetup/*
+    # rm -rfv WeChatSetup/*
     mkdir -p ${temp_path}/temp
+    login_gh
     ## https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md
     # install_depends
     download_wechat
@@ -92,6 +103,7 @@ function main() {
     prepare_commit
 
     gh release create v$dest_version ./WeChatSetup/$dest_version/WeChatSetup-$dest_version.exe -F ./WeChatSetup/$dest_version/WeChatSetup-$dest_version.exe.sha256 -t "Wechat v$dest_version"
+    gh auth logout
     clean_data 0
 }
 
