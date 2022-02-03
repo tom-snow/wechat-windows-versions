@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Test Github Action Server Time
-        run: bash -x echo `date`
+        run: echo `date`
       - name: Check new version and push
         env: 
           GHTOKEN: ${{ secrets.GHTOKEN }}
