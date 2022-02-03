@@ -103,7 +103,7 @@ function main() {
     prepare_commit
 
     gh release create v$dest_version ./WeChatSetup/$dest_version/WeChatSetup-$dest_version.exe -F ./WeChatSetup/$dest_version/WeChatSetup-$dest_version.exe.sha256 -t "Wechat v$dest_version"
-    gh auth logout
+    # gh auth logout
     clean_data 0
 }
 
