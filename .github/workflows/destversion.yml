@@ -15,8 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Test Github Action Server Time
-        run: echo `date`
+      # - name: Test Github Action Server Time
+      #   run: echo `date`
       - name: Check new version and push
         env: 
           GHTOKEN: ${{ secrets.GHTOKEN }}

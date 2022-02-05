@@ -17,10 +17,21 @@ function install_depends() {
     echo -e "## \033[1;33mInstalling 7zip, shasum, wget, curl, git\033[0m"
     printf "#%.0s" {1..60}
     echo 
+
     apt install -y p7zip-full p7zip-rar libdigest-sha-perl wget curl git
 }
 
 function login_gh() {
+    printf "#%.0s" {1..60}
+    echo 
+    echo -e "## \033[1;33mLogin to github to use github-cli...\033[0m"
+    printf "#%.0s" {1..60}
+    echo 
+    if [ -z $GHTOKEN ]; then
+        >&2 echo -e "\033[1;31mMissing Github Token! Please get a BotToken from 'Github Settings->Developer settings->Personal access tokens' and set it in Repo Secrect\033[0m"
+        exit 1
+    fi
+
     echo $GHTOKEN > WeChatSetup/temp/GHTOKEN
     gh auth login --with-token < WeChatSetup/temp/GHTOKEN
     if [ "$?" -ne 0 ]; then
@@ -36,6 +47,7 @@ function download_wechat() {
     echo -e "## \033[1;33mDownloading the newest WechatSetup...\033[0m"
     printf "#%.0s" {1..60}
     echo 
+
     wget "$download_link" -O ${temp_path}/WeChatSetup.exe
     if [ "$?" -ne 0 ]; then
         >&2 echo -e "\033[1;31mDownload Failed, please check your network!\033[0m"
@@ -64,6 +76,7 @@ function prepare_commit() {
     echo -e "## \033[1;33mPrepare to commit new version\033[0m"
     printf "#%.0s" {1..60}
     echo 
+
     mkdir -p WeChatSetup/$dest_version
     cp $temp_path/WeChatSetup.exe WeChatSetup/$dest_version/WeChatSetup-$dest_version.exe
     echo "DestVersion: $dest_version" > WeChatSetup/$dest_version/WeChatSetup-$dest_version.exe.sha256
@@ -79,6 +92,7 @@ function clean_data() {
     echo -e "## \033[1;33mClean runtime and exit...\033[0m"
     printf "#%.0s" {1..60}
     echo 
+
     rm -rfv WeChatSetup/*
     exit $1
 }
@@ -103,7 +117,9 @@ function main() {
     prepare_commit
 
     gh release create v$dest_version ./WeChatSetup/$dest_version/WeChatSetup-$dest_version.exe -F ./WeChatSetup/$dest_version/WeChatSetup-$dest_version.exe.sha256 -t "Wechat v$dest_version"
-    # gh auth logout
+
+    gh auth logout --hostname github.com | echo "y"
+
     clean_data 0
 }
 
