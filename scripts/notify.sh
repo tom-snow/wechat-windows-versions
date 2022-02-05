@@ -59,10 +59,11 @@ function clean_data() {
 }
 
 function main() {
-    login_gh
-
     temp_path="WeChatSetup/temp"
     mkdir -p ${temp_path}
+
+    login_gh
+
     gh release view  --json body --jq ".body" > ${temp_path}/release.info
 
     release_info=`awk '!/^$|Sha256/ { $1="*"$1"*";sub("UpdateTime", "CheckTime"); if ( match($2, /https?:\/\/([\w\.\/:])*/) ) $2="[Url]("$2")"; print $0 }' ${temp_path}/release.info | join_lines '%0A' | sed 's/ /%20/g'`
