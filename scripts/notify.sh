@@ -17,7 +17,6 @@ if [ -z $CHATIDS ]; then
     >&2 echo -e "\033[1;31mMissing ChatIds! Please get ChatId from @GroupIDbot on Telegram Chats(Muti chatids split with comma ',') and set it in Repo Environment Values\033[0m"
     exit 2
 fi
-chat_ids=`echo $CHATIDS | sed 's/,/ /g'`
 
 function login_gh() {
     printf "#%.0s" {1..60}
@@ -70,11 +69,13 @@ function main() {
     dest_version=`awk '/DestVersion/ { print $2 }' ${temp_path}/release.info`
     release_info="$release_info%0A%0A*NotifyFrom:*%20[Github](https://github.com/tom-snow/wechat-windows-versions/releases/tag/v$dest_version)"
 
-    for chatid in $chat_ids  
+    echo $CHATIDS | sed 's/,/\n/g' > ${temp_path}/chat_ids
+    # while IFS="" read -r chatid || [ -n "$chatid" ]
+    while IFS="" read -r chatid
     do
         api_link="https://api.telegram.org/bot$BOTTOKEN/sendMessage?chat_id=$chatid&text=*New%20WeChat%20Windows%20Version!!*%0A%0A$release_info&parse_mode=Markdown&disable_web_page_preview=true"
         curl -s -o /dev/null $api_link
-    done
+    done < ${temp_path}/chat_ids
 
     gh auth logout --hostname github.com | echo "y"
     clean_data 0
