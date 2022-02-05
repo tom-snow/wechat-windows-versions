@@ -7,7 +7,8 @@
 ├── WeChatSetup # 微信安装包临时目录
 │   └── temp # 临时目录
 └── scripts   # 脚本目录
-    └── destVersionRelease.sh # 获取安装包及取得版本号与 hash 值的脚本
+    ├── destVersionRelease.sh # 获取安装包及取得版本号与 hash 值的脚本
+    └── notify.sh # 新release 时调用通知的脚本
 ```
 
 ## 说明

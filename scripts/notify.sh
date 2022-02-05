@@ -4,17 +4,17 @@ set -eo pipefail
 
 
 if [ -z $GHTOKEN ]; then
-    >&2 echo -e "\033[1;31mMissing Github Token! Please get a BotToken from 'Github Settings->Developer settings->Personal access tokens' and set it in Repo Secrect\033[0m"
+    >&2 echo -e "\033[1;31mMissing Github Token(GHTOKEN)! Please get a BotToken from 'Github Settings->Developer settings->Personal access tokens' and set it in Repo Secrect\033[0m"
     exit 1
 fi
 
 if [ -z $BOTTOKEN ]; then
-    >&2 echo -e "\033[1;31mMissing Bot Token! Please get a BotToken from @Botfather on Telegram and set it in Repo Secrect\033[0m"
+    >&2 echo -e "\033[1;31mMissing Bot Token(BOTTOKEN)! Please get a BotToken from @Botfather on Telegram and set it in Repo Secrect\033[0m"
     exit 2
 fi
 
 if [ -z $CHATIDS ]; then
-    >&2 echo -e "\033[1;31mMissing ChatIds! Please get ChatId from @GroupIDbot on Telegram Chats(Muti chatids split with comma ',') and set it in Repo Environment Values\033[0m"
+    >&2 echo -e "\033[1;31mMissing ChatIds(CHATIDS)! Please get ChatId from @GroupIDbot on Telegram Chats(Muti chatids split with comma ',') and set it in Repo Environment Values\033[0m"
     exit 2
 fi
 
