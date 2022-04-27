@@ -1,0 +1,23 @@
+name: Wechat Dest Version
+
+on:
+  schedule:
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+    inputs:
+      download_link:
+        description: 'The manual WechatSetup.exe download link'
+        required: false
+        default: 'https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe'
+
+jobs:
+  save_new_wechat:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # - name: Test Github Action Server Time
+      #   run: echo `date`
+      - name: Check new version and push
+        env: 
+          GHTOKEN: ${{ secrets.GHTOKEN }}
+        run: bash -x ./scripts/destVersionRelease.sh ${{ github.event.inputs.download_link }}
