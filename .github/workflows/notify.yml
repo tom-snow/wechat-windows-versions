@@ -1,0 +1,18 @@
+name: Wechat Release Notify
+
+on:
+  release:
+    types: [published]
+
+
+jobs:
+  notify_to_tg:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Check new version and push
+        env: 
+          GHTOKEN: ${{ secrets.GHTOKEN }}
+          BOTTOKEN: ${{ secrets.BOTTOKEN }}
+          CHATIDS: ${{ secrets.CHATIDS }}
+        run: bash -x ./scripts/notify.sh
