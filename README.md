@@ -1,6 +1,8 @@
 # wechat-windows-versions
 收集 Windows 微信版本并保存
 
+相关项目: [Mac微信收集](https://github.com/zsbai/wechat-versions)
+
 ## 目录结构
 ```shell
 ├── README.md # 自述文件
