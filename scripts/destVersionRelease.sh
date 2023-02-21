@@ -70,7 +70,7 @@ function extract_version() {
     
     # new version
     7z x ${temp_path}/WeChatSetup.exe -o${temp_path}/temp
-    dest_version=`ls -l temp | awk '{print $9}' | grep '^\[[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\]$' | sed -e 's/^\[//g' -e 's/\]$//g'`
+    dest_version=`ls -l ${temp_path}/temp | awk '{print $9}' | grep '^\[[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\]$' | sed -e 's/^\[//g' -e 's/\]$//g'`
 }
 
 
