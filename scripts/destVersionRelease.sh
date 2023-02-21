@@ -62,10 +62,15 @@ function extract_version() {
     printf "#%.0s" {1..60}
     echo 
     
-    local outfile=`7z l ${temp_path}/WeChatSetup.exe | grep improve.xml | awk 'NR ==1 { print $NF }'`
+    # old version
+    #local outfile=`7z l ${temp_path}/WeChatSetup.exe | grep improve.xml | awk 'NR ==1 { print $NF }'`
     ## 7z x ${temp_path}/WeChatSetup.exe -o${temp_path}/temp "\$R5/Tencent/WeChat/improve.xml"
-    7z x ${temp_path}/WeChatSetup.exe -o${temp_path}/temp $outfile
-    dest_version=`awk '/MinVersion/{ print $2 }' ${temp_path}/temp/$outfile | sed -e 's/^.*="//g' -e 's/".*$//g'`
+    #7z x ${temp_path}/WeChatSetup.exe -o${temp_path}/temp $outfile
+    # dest_version=`awk '/MinVersion/{ print $2 }' ${temp_path}/temp/$outfile | sed -e 's/^.*="//g' -e 's/".*$//g'`
+    
+    # new version
+    7z x ${temp_path}/WeChatSetup.exe -o${temp_path}/temp
+    dest_version=`ls -l temp | awk '{print $9}' | grep '^\[[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\]$' | sed -e 's/^\[//g' -e 's/\]$//g'`
 }
 
 
