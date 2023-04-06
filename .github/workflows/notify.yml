@@ -15,4 +15,5 @@ jobs:
           GHTOKEN: ${{ secrets.GHTOKEN }}
           BOTTOKEN: ${{ secrets.BOTTOKEN }}
           CHATIDS: ${{ secrets.CHATIDS }}
-        run: bash -x ./scripts/notify.sh
+        # run: bash -x ./scripts/notify.sh
+        run: echo "暂时弃用通知"
