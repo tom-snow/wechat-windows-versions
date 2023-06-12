@@ -28,7 +28,7 @@ function login_gh() {
     printf "#%.0s" {1..60}
     echo 
     if [ -z $GHTOKEN ]; then
-        >&2 echo -e "\033[1;31mMissing Github Token! Please get a BotToken from 'Github Settings->Developer settings->Personal access tokens' and set it in Repo Secrect\033[0m"
+        >&2 echo -e "\033[1;31mMissing Github Token! Please get a GHToken from 'Github Settings->Developer settings->Personal access tokens' and set it in Repo Secrect\033[0m"
         exit 1
     fi
 
